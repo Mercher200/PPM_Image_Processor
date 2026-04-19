@@ -1,7 +1,58 @@
 # PPM Image Processor
 
-Цель
-- Набор утилит для чтения, сохранения и выполнения базовых операций над изображениями в формате PPM (Portable Pixmap).
+## English version
+
+A set of utilities for reading, saving, and performing basic operations on images in PPM (Portable Pixmap) format.
+
+Supported format
+- PPM (ASCII/Plain P3 or binary P6). The parser expects a header with the format type, width, height, and maximum color value (maxval), followed by the pixel data.
+- Limitations: maxval is assumed to be ≤ 255 (byte representation of channels).
+
+Architecture and modules
+- Parser: reads the header, validates the fields, and loads the pixel array into memory.
+- Serializer (saving): writes the header and pixel data to the specified format (P3/P6).
+- Image operations: transformations (rotation, mirroring), color inversion, brightness/contrast changes, simple filtering.
+- Tests/examples: a set of PPM files for verifying the correctness of operations.
+
+Repository structure
+- Sources and project:
+- [Test_cpp_penyaz/Test_cpp_penyaz.vcxproj](Test_cpp_penyaz/Test_cpp_penyaz.vcxproj)
+- [Test_cpp_penyaz/Test_cpp_penyaz.vcxproj.filters](Test_cpp_penyaz/Test_cpp_penyaz.vcxproj.filters)
+- [Test_cpp_penyaz/test.cpp](Test_cpp_penyaz/test.cpp)
+- Test PPM files:
+- [Test_cpp_penyaz/test_color_changing.ppm](Test_cpp_penyaz/test_color_changing.ppm)
+- [Test_cpp_penyaz/test_colors_inverting.ppm](Test_cpp_penyaz/test_colors_inverting.ppm) 
+- [Test_cpp_penyaz/test_flip_over_180.ppm](Test_cpp_penyaz/test_flip_over_180.ppm) 
+- [Test_cpp_penyaz/test_flip_over_90.ppm](Test_cpp_penyaz/test_flip_over_90.ppm) 
+- [Test_cpp_penyaz/test_mirroring.ppm](Test_cpp_penyaz/test_mirroring.ppm) 
+- [Test_cpp_penyaz/test_save.ppm](Test_cpp_penyaz/test_save.ppm)
+- Root configuration files: 
+- [.gitattributes](.gitattributes)
+- [.gitignore](.gitignore)
+- [Test_cpp_penyaz.sln](Test_cpp_penyaz.sln)
+- [README.md](README.md)
+
+Build and Run
+- Open [Test_cpp_penyaz.sln](Test_cpp_penyaz.sln) in Visual Studio.
+- Build the solution (Release/Debug).
+- Run example: execute the binary from the project; the test `test.cpp` demonstrates parser/save calls and several image operations.
+
+Usage Examples (Logic)
+- Load: open file, read header, allocate buffer of width*height*3, fill with RGB bytes. - Change: Perform byte-by-byte/coordinate-by-coordinate operations on the buffer (e.g., channel swap, inversion: 255 - value).
+- Save: Write the header and buffer in the selected format.
+
+Testing
+- Use the provided PPMs in the [Test_cpp_penyaz](Test_cpp_penyaz) folder for validation: visually and programmatically.
+- Check the header for correctness and the buffer size (width * height * 3).
+
+Limitations and Notes
+- Intended for images that fit entirely in RAM.
+- No support for color profiles or formats with a maxval > 255.
+- If expansion is needed, add stream processing for large images and support for additional PNM types.
+
+## Russian version
+
+Набор утилит для чтения, сохранения и выполнения базовых операций над изображениями в формате PPM (Portable Pixmap).
 
 Поддерживаемый формат
 - PPM (ASCII/Plain P3 или бинарный P6). Парсер ожидает заголовок с типом формата, шириной, высотой и максимальным значением цвета (maxval), затем следуют данные пикселей.
